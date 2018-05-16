@@ -77,7 +77,7 @@ public class NeuralNetwork {
 
         //Set the exits for the output layer
         for (int n = 0; n < outputLayer.getPercNumber(); n++){
-            outputExits[n] = outputLayer.getPerceptron(n).getExit(exits[hiddenLayer.length-1]);
+            outputExits[n] = outputLayer.getPerceptron(n).getExit(exits[LAYERS-1]);
             outputDelta[n] = outputLayer.getPerceptron(n).getDelta();
             outputWeights[n] = outputLayer.getPerceptron(n).getWeights();
         }
@@ -96,7 +96,7 @@ public class NeuralNetwork {
         neuralNetworkExits(input);
 
         for (int n = 0; n < outputLayer.getPercNumber(); n++){
-            outputLayer.getPerceptron(n).outputTraining(outputLayer.getPerceptron(n).sigmoid(expected[n]), exits[LAYERS-1], LEARNING_RATE);
+            outputLayer.getPerceptron(n).outputTraining(expected[n], exits[LAYERS-1], LEARNING_RATE);
         }
 
         for (int n = 0; n < hiddenLayer[LAYERS-1].getPercNumber(); n++) {

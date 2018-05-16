@@ -31,30 +31,16 @@ public class Perceptron {
      * @return
      */
 
-    private float internalActivation(float[] input){
+    private float internalActivation(float[] input) {
 
         float intActivation = 0;
 
-        for (int cont = 0; cont < WEIGHT_NUMBER; cont++){
-            intActivation += weight[cont]*input[cont];
+        for (int cont = 0; cont < WEIGHT_NUMBER; cont++) {
+            intActivation += weight[cont] * input[cont];
         }
 
         intActivation += bias;
         return intActivation;
-
-    }
-
-    /**
-     * This is called activation function --> is used to normalize the exit of the perceptron
-     * @param internalActivation
-     * @return
-     */
-
-    public static float sigmoid(float internalActivation){
-
-        float sigmoExit;
-        sigmoExit = (float)(1/(1 + Math.exp(-internalActivation)));
-        return sigmoExit;
 
     }
 
@@ -66,7 +52,7 @@ public class Perceptron {
 
     public float getExit(float[] input){
 
-        return sigmoid(internalActivation(input));
+        return internalActivation(input);
 
     }
 
@@ -81,10 +67,10 @@ public class Perceptron {
 
         this.exit = getExit(input);
         float error = expected - exit;
-        this.delta = error*exit*(1-exit);
+        this.delta = error*LEARNING_RATE;
 
         for (int cont = 0; cont < WEIGHT_NUMBER; cont++){
-            weight[cont] += LEARNING_RATE*delta*input[cont];
+            weight[cont] += LEARNING_RATE*delta;
         }
 
         bias += LEARNING_RATE*delta;
@@ -106,13 +92,13 @@ public class Perceptron {
         float error = 0f;
 
         for (int i = 0; i < perceptronsNumber; i++){
-            error += delta[i] * layerWeight[i][n];
+            error += delta[i] * LEARNING_RATE * layerWeight[i][n];
         }
 
-        this.delta = error*exit*(1-exit);
+        this.delta = error*LEARNING_RATE;
 
         for (int cont = 0; cont < WEIGHT_NUMBER; cont++){
-            weight[cont] += LEARNING_RATE*this.delta*input[cont];
+            weight[cont] += LEARNING_RATE*this.delta;
         }
 
         bias += LEARNING_RATE*this.delta;
